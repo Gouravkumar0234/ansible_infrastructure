@@ -1,0 +1,27 @@
+---
+- name: install centos on docker image
+  hosts: docker
+  user: root
+  become: true
+
+  tasks:
+  - name: Creates directory
+    file:
+      path: /opt/docker/centos
+      state: directory
+      owner: gourav
+      group: gourav
+      mode: 0775
+
+  - name: Ansible create file if it doesn't exist example
+    file:
+      path: "/opt/docker/centos/Dockerfile"
+      state: touch
+
+  - name: Insert Index Page
+    template:
+      src: centos7/Dockerfile
+      dest: /opt/docker/centos/Dockerfile
+
+#  - name: Build centos image
+#    command: docker build -t centos .

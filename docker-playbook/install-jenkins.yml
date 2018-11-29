@@ -1,0 +1,48 @@
+---
+- name: install jenkins image on docker
+  hosts: docker
+  user: root
+  become: true
+
+  tasks:
+  - name: Creates directory
+    file:
+      path: /opt/docker/jenkins
+      state: directory
+      owner: gourav
+      group: gourav
+      mode: 0775
+
+  - name: Ansible create file if it doesn't exist example
+    file:
+      path: "/opt/docker/jenkins/Dockerfile"
+      state: touch
+
+  - name: Insert Index Page
+    template:
+      src: jenkins/Dockerfile
+      dest: /opt/docker/jenkins/Dockerfile    
+
+#  - name: build image
+#    docker_image: >
+#      name="jenkins"
+#      tag="ex1"
+#      path="/opt/docker/jenkins/"
+#      state=build
+
+
+#  - name: Build jenkis image
+#    file:
+#      path: /opt/docker/jenkins
+#      command: docker build -t jenkins .
+
+#  - name: return motd to registered var
+#   command: docker build -t /opt/docker/jenkins . | docker run -p 8080:8080 --name=jenkins-master -d /opt/docker/jenkins
+ 
+#  - name: Build jenkisn image
+ #   command: docker build -t jenkins .
+
+#  - name: assign port no
+#    file:
+#      path: /opt/docker/jenkins
+#      command: docker run -p 8080:8080 --name=jenkins-master -d jenkins
