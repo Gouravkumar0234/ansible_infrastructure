@@ -1,0 +1,62 @@
+---
+# tasks file for nginx
+- name: Install nginx
+  hosts: nginx
+  user: gourav
+  become: true
+
+  tasks:
+  - name: Creates directory
+    file:
+      path: /usr/share/nginx/html/style
+      state: directory
+      owner: gourav
+      group: gourav
+      mode: 0775
+
+  - name: Ansible copy file to remote server
+    copy:
+      src: /opt/ansible/nginx-server/templates/colour_blue/style/
+      dest: /usr/share/nginx/html/style/
+
+  - name: Add epel-release repo
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install nginx
+    yum:
+      name: nginx
+      state: present
+
+  - name: Insert Index Page
+    template:
+      src: colour_blue/index.html
+      dest: /usr/share/nginx/html/index.html
+
+  - name: another_page.html
+    template:
+      src: colour_blue/another_page.html
+      dest: /usr/share/nginx/html/another_page.html
+
+  - name: Insert contact.html
+    template:
+      src: colour_blue/contact.html
+      dest: /usr/share/nginx/html/contact.html
+
+  - name: Insert examples.html
+    template:
+      src: colour_blue/examples.html
+      dest: /usr/share/nginx/html/examples.html
+
+  - name: Insert page.html Page
+    template:
+      src: colour_blue/page.html
+      dest: /usr/share/nginx/html/page.html
+
+# Starting the services
+  - name: Start NGiNX
+    service:
+      name: nginx
+      state: started
+
