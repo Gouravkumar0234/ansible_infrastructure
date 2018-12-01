@@ -1,0 +1,5 @@
+- hosts: nginx
+#  users: root
+  roles:
+    - jenkins
+  tags: jenkins
